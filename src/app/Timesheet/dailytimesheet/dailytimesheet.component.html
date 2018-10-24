@@ -1,0 +1,316 @@
+<!-- <div class="main-content">
+    <div class="container-fluid"> -->
+
+<div style="display: inline-block; background-color: lightgray; padding-top: 2%; padding-left: 2%; padding-bottom: 2%; padding-right: 2%">
+
+    <div class="head" style="margin-bottom: .5%; background-color: white;">
+        <table>
+
+            <div class="row">
+                <!-- <div class="col-md-3">
+                    <div class="card-header card-header-success">
+                        <div>TimeSheet : DATE HERE!</div>
+                    </div>
+                </div> -->
+                <div style="width:33%">
+                    <div class="card-header card-header-success">
+                        <div>
+                            <mat-form-field>
+                                <mat-select placeholder="Location" [(ngModel)]="DefaultLocation">
+                                    <mat-option *ngFor="let location of locations" [value]="location.name">{{location.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div style="width:33%; padding-left: 7%;">
+                    <div class="card-header card-header-success">
+                        <div>IRA : {{IraName}}</div>
+                    </div>
+                </div>
+                <div style="width:33%; padding-left: 12%;">
+
+                    <button mat-raised-button type="submit" class="btn btn-warning " (click)="addNewTask()">Add
+                        New Task</button>
+
+                </div>
+            </div>
+
+        </table>
+    </div>
+
+
+    <!-- <div class="col-md-3" style="width:25%; display: inline-block; margin-top: 20%"  (click)="dateClick()"> -->
+    <!--     <div class="col-md-3" style="width:25%; float: left; background-color: white;">
+        <div class="card-header card-header-success">
+            <div>
+                <mat-calendar [selected]="selectedDate" (selectedChange)="selectedDate = $event">
+                </mat-calendar>
+            </div>
+        </div>
+    </div> -->
+
+
+
+    <div class="col-md-3" style="width:25%; float: left; background-color: white;">
+        <div class="card card-chart">
+            <div class="card-header card-header-success">
+                <div class="ct-chart" id="dailySalesChart">TimeSheet : {{SelectedDate}}</div>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">
+                    <!-- <mat-calendar [selected]="selectedDate" (selectedChange)="selectedDate = $event">
+                    </mat-calendar> -->
+                    <!-- <label for="month">{{MonthLeft}}</label>&nbsp;-
+                    <label for="month">{{MonthMid}}</label>&nbsp;-
+                    <label for="month">{{MonthRight}}</label> -->
+
+                    <mat-tab-group [selectedIndex]="1">
+                        <mat-tab label={{MonthLeft}}> Content 1 </mat-tab>
+                        <mat-tab label={{MonthMid}}>
+                            <ng-container *ngFor="let vardate of datesArray; let i=index">
+                                <label for="day" (click)="dateClick($event)">{{vardate}}/{{MonthMid}}/{{year}}</label>
+                                <br>
+                            </ng-container>
+                        </mat-tab>
+                        <mat-tab label={{MonthRight}}> Content 3 </mat-tab>
+                    </mat-tab-group>
+
+
+                </h4>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <!-- <div style="width:20%; display: inline-block;" (click)="dateClick()">
+                <mat-calendar [selected]="selectedDate" (selectedChange)="selectedDate = $event">
+                </mat-calendar>
+            </div> -->
+
+    <div style="float: right; width: 73%;background-color: white; ">
+        <!-- <div> -->
+
+
+
+
+
+        <div>
+            <!-- <table>
+                <tbody>
+                  <tr>
+                    <th>Project</th> -->
+
+            <!-- <th style="align-content: left;">Project</th> -->
+
+            <!-- <th>Module</th>
+                    <th>Object</th>
+                    <th>Activity</th>
+                    <th>JIRA Number</th>
+                    <th>Comments</th>
+                    <th>Hrs Worked</th>
+                    <th></th>
+                  </tr>
+                </tbody>
+              </table> -->
+
+
+
+            <ng-container *ngFor="let container of containers; let i=index">
+                <div *ngIf=" containers[i]" [id]="i">
+                    Task:{{i}}
+
+                    <button style="margin-left: 40%; margin-top: 2%;" mat-raised-button type="submit" class="btn btn-danger"
+                        (click)="closeTask(i)">clear
+                        <mat-icon class="closeTask" (click)="closeTask(i)">clear</mat-icon>
+                        <!-- <i style="padding-left: 40%; padding-top: 2%;" class="fa" (click)="closeTask(i)">&#xf0b2;</i> -->
+                    </button>
+                    <table>
+                        <tbody>
+                            <div class="row" style="border-bottom-style: solid">
+
+                                <div style="width: 12.5%; padding-left: 2%;">
+                                    <div class="card card-chart">
+                                        <div class="card-header card-header-success">
+                                            <div class="ct-chart" id="dailySalesChart">Project</div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">
+                                                <mat-form-field>
+                                                    <mat-select [(ngModel)]="ProjectArray[i]" [ngClass]="{show: ProjectClass[i], hide: !ProjectClass[i]}"
+                                                        placeholder="Project" (selectionChange)="projectClick($event,i)">
+                                                        <mat-option *ngFor="let project of projects" [value]="project.name">
+                                                            {{project.name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </h4>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div style="width: 12.5%;">
+                                    <div class="card card-chart">
+                                        <div class="card-header card-header-success">
+                                            <div class="ct-chart" id="dailySalesChart">Release</div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">
+                                                <mat-form-field>
+                                                    <mat-select>
+                                                        <mat-option>
+
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </h4>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div style="width: 12.5%;">
+                                    <div class="card card-chart">
+                                        <div class="card-header card-header-success">
+                                            <div class="ct-chart" id="dailySalesChart">Module</div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">
+                                                <mat-form-field>
+                                                    <mat-select [(ngModel)]="ModuleArray[i]" [ngClass]="{show: ModuleClass[i], hide: !ModuleClass[i]}"
+                                                        placeholder="Module" (selectionChange)="moduleClick($event,i)">
+                                                        <mat-option *ngFor="let module of modules" [value]="module.name">
+                                                            {{module.name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </h4>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div style="width: 12.5%;">
+                                    <div class="card card-chart">
+                                        <div class="card-header card-header-success">
+                                            <div class="ct-chart" id="dailySalesChart">Object</div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">
+                                                <mat-form-field>
+                                                    <mat-select [(ngModel)]="ObjectArray[i]" [ngClass]="{show: ObjectClass[i], hide: !ObjectClass[i]}"
+                                                        (selectionChange)="objectClick($event,i)" placeholder="Object">
+                                                        <mat-option *ngFor="let object of objects" [value]="object.name">
+                                                            {{object.name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </h4>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- </div> -->
+
+
+
+                                <!-- <div class="row"> -->
+                                <div style="width: 12.5%;">
+                                    <div class="card card-chart">
+                                        <div class="card-header card-header-success">
+                                            <div class="ct-chart" id="dailySalesChart">Activity</div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">
+                                                <mat-form-field>
+                                                    <mat-select [(ngModel)]="ActivityArray[i]" [ngClass]="{show: ActivityClass[i], hide: !ActivityClass[i]}"
+                                                        (selectionChange)="activityClick($event,i)" placeholder="Activity">
+                                                        <mat-option *ngFor="let activity of activitys" [value]="activity.name">
+                                                            {{activity.name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="width: 12.5%;">
+                                    <div class="card card-chart">
+                                        <div class="card-header card-header-success">
+                                            <div class="ct-chart" id="dailySalesChart">JIRA Number</div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">
+                                                <input placeholder="JIRA Number" style="width:90%" [(ngModel)]="JIRANumberArray[i]"
+                                                    *ngIf="IsJiraOn[i] == true">
+                                                <input placeholder="JIRA Number" style="width:90%" [(ngModel)]="JIRANumberArray[i]"
+                                                    *ngIf="IsJiraOn[i] == false" disabled>
+                                            </h4>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div style="width: 12.5%;">
+                                    <div class="card card-chart">
+                                        <div class="card-header card-header-success">
+                                            <div class="ct-chart" id="websiteViewsChart">Comments</div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">
+                                                <mat-form-field class="example-full-width">
+                                                    <textarea placeholder="Comments" matInput [ngClass]="{show: TextAreaClass[i], hide: !TextAreaClass[i]}"
+                                                        style="width:90%" [(ngModel)]="CommentsArray[i]" (input)="commentClick(i)"></textarea>
+                                                </mat-form-field>
+                                            </h4>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div style="width: 12.5%; padding-right: 2%">
+                                    <div class="card card-chart">
+                                        <div class="card-header card-header-success">
+                                            <div class="ct-chart" id="completedTasksChart">Hrs Worked</div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">
+                                                <mat-form-field class="example-full-width">
+                                                    <input placeholder="Hrs Worked" [ngClass]="{show: HrsClass[i], hide: !HrsClass[i]}"
+                                                        matInput [(ngModel)]="HrsWorkedArray[i]" (input)="hoursClick($event,i)">
+                                                </mat-form-field>
+                                            </h4>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </tbody>
+                    </table>
+                </div>
+            </ng-container>
+        </div>
+
+        <div style="float:right">
+            <!-- hrs Worked -->
+            Total Hrs: {{TotalHours}}
+            <!-- Save -->
+
+            <button mat-raised-button type="submit" class="btn btn-danger " (click)="saveClick()">Save</button>&nbsp;
+            <button mat-raised-button type="submit" class="btn btn-danger ">Submit</button>&nbsp;
+            <button mat-raised-button type="submit" class="btn btn-danger " (click)="cancelClick()">Cancel</button>
+
+        </div>
+    </div>
+</div>
+<!-- </div>
+</div> -->

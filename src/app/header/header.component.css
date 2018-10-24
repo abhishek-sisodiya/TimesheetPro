@@ -1,0 +1,12 @@
+#menu li {
+    display:inline;     
+    float: right;
+}
+
+#home{
+    padding-right: 2%;
+}
+
+/* #menu{
+    box-shadow: 5px 1px #888888;
+} */

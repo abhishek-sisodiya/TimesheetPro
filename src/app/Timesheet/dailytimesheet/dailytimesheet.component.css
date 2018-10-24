@@ -1,0 +1,46 @@
+table,mat-form-field,input,textarea {
+    table-layout: fixed;
+    width: 100%;   
+}
+
+  /* .head{
+      background-color: lightgray;
+  }
+
+  td{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+div{
+    border-style: outset;
+} */
+
+
+.show {
+    background-color: white;
+ }
+ 
+ .hide {
+    border-style: solid;
+    border-color: red;
+ }
+
+ .addNewTask{
+     cursor: pointer;
+     color: gray;
+ }
+
+ .closeTask, label{
+    cursor: pointer;
+ }
+
+ .mat-button    {
+    background-color: lightgray;
+ }
+
+ /deep/.mat-tab-label, /deep/.mat-tab-label-active{
+    min-width: 0!important;
+    padding: 3px!important;
+    margin: 3px!important;
+   }
