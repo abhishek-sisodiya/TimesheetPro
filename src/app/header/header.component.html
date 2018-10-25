@@ -1,40 +1,78 @@
 <div id="menu">
-<ul   >
-    <!--             <li>
+    <div class="headerleft" style="width: 50%; display: inline-block">
+        <img style="padding-bottom: 30px; padding-top: 30px; width: 50%;" src="assets/img/logo.png">
+    </div>
+    <div style=" width: 50%; display: inline-block;">
+        <div style="padding-left: 50%;">
+            <ul id="nav" class="nav nav-pills clearfix right" role="tablist" style="padding-top: 2%;">
+                <li>Welcome <p style="font-weight: bold"> {{WelcomeUser}} </p>
+                </li>&nbsp;
+                <button mat-raised-button type="submit" class="btn btn-warning " [routerLink]="['/dashboard']">
+                    Logout</button>
+            </ul>
+            <ul style="margin-top: 2%;" id="nav" class="nav nav-pills clearfix right" role="tablist">
+                <!--             <li>
         <a >Home
         </a>
     </li> -->
-    <li id="home">
-        <button mat-raised-button type="submit" class="btn btn-danger " [routerLink]="['/dashboard']">
-            Home</button>
+                <li id="home">
+                    <button mat-raised-button type="submit" class="btn btn-danger " [routerLink]="['/dashboard']">
+                        Home</button>
 
-    </li>
-    <li class="nav-item dropdown" id="timesheetmenu">
-            <button mat-raised-button type="submit" class="btn btn-danger "  id="navbarDropdownMenuLink" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <i class="material-icons">content_paste</i>
-            <span class="notification">TimeSheet</span>
+                </li>
 
-            </button>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                <button mat-raised-button type="submit" class="btn btn-warning " (click)="dailySheetClick()" [routerLink]="['/daily-sheet']">
 
-                    Daily Timesheet</button>
-            <a class="dropdown-item" href="#">Edit TimeSheet</a>
-            <a class="dropdown-item" href="#">Timesheet Template</a>
-            <a class="dropdown-item" href="#">Non-working day timeSheet</a>
-            <a class="dropdown-item" href="#">Approve TimeSheet</a>
-            <a class="dropdown-item" href="#">Timesheet View</a>
-            <a class="dropdown-item" href="#">Recall Timesheet</a>
-            <a class="dropdown-item" href="#">Timesheet Deatil</a>
-            <a class="dropdown-item" href="#">Employee Skill</a>
-        </div>
-    </li>
-    <!-- <li>
+                <div class="dropdown">
+                    <button mat-raised-button type="submit" class="btn btn-danger , dropbtn " id="navbarDropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="material-icons">content_paste</i>
+                        <span class="notification">TimeSheet</span>
+
+                    </button>
+                    <div class="dropdown-content">
+                        <label class="dropdown-item" (click)="dailySheetClick()" [routerLink]="['/daily-sheet']">Daily
+                            Timesheet</label>
+                        <a class="dropdown-item" href="#">Edit TimeSheet</a>
+                        <a class="dropdown-item" href="#">Timesheet Template</a>
+                        <a class="dropdown-item" href="#">Non-working day timeSheet</a>
+                        <a class="dropdown-item" href="#">Approve TimeSheet</a>
+                        <a class="dropdown-item" href="#">Timesheet View</a>
+                        <a class="dropdown-item" href="#">Recall Timesheet</a>
+                        <a class="dropdown-item" href="#">Timesheet Deatil</a>
+                        <a class="dropdown-item" href="#">Employee Skill</a>
+                    </div>
+                </div>
+
+
+
+                <!-- <li class="nav-item dropdown" id="timesheetmenu">
+                    <button mat-raised-button type="submit" class="btn btn-danger " id="navbarDropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="material-icons">content_paste</i>
+                        <span class="notification">TimeSheet</span>
+
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                        <label class="dropdown-item" (click)="dailySheetClick()" [routerLink]="['/daily-sheet']">Daily
+                            Timesheet</label>
+                        <a class="dropdown-item" href="#">Edit TimeSheet</a>
+                        <a class="dropdown-item" href="#">Timesheet Template</a>
+                        <a class="dropdown-item" href="#">Non-working day timeSheet</a>
+                        <a class="dropdown-item" href="#">Approve TimeSheet</a>
+                        <a class="dropdown-item" href="#">Timesheet View</a>
+                        <a class="dropdown-item" href="#">Recall Timesheet</a>
+                        <a class="dropdown-item" href="#">Timesheet Deatil</a>
+                        <a class="dropdown-item" href="#">Employee Skill</a>
+                    </div>
+                </li> -->
+                <!-- <li>
                     <div *ngIf="showCalendar">
                         <mat-calendar [selected]="selectedDate" (selectedChange)="selectedDate = $event">
                         </mat-calendar>
                     </div>
                 </li> -->
-</ul>
+            </ul>
+
+        </div>
+    </div>
 </div>

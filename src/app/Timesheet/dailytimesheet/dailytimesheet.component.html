@@ -1,8 +1,16 @@
 <!-- <div class="main-content">
     <div class="container-fluid"> -->
 
-<div style="display: inline-block; background-color: lightgray; padding-top: 2%; padding-left: 2%; padding-bottom: 2%; padding-right: 2%">
+<div style="display: inline-block; background-color: lightgray; ">
 
+    <div class="left" style="width:50%;display: inline-block; padding-top: 2%;">
+        <p style="font-size: 200%; font-weight: bold;"> TimeSheet</p>
+        <p>PATH-></p>
+    </div>
+    <div class="right" style="float:right; padding-top: 2%;">
+        <a href="#">Edit data template</a><br>
+        <a href="#">Use data template</a>
+    </div>
     <div class="head" style="margin-bottom: .5%; background-color: white;">
         <table>
 
@@ -101,23 +109,20 @@
 
 
         <div>
-            <!-- <table>
+            <table>
                 <tbody>
-                  <tr>
-                    <th>Project</th> -->
-
-            <!-- <th style="align-content: left;">Project</th> -->
-
-            <!-- <th>Module</th>
-                    <th>Object</th>
-                    <th>Activity</th>
-                    <th>JIRA Number</th>
-                    <th>Comments</th>
-                    <th>Hrs Worked</th>
-                    <th></th>
-                  </tr>
+                    <tr>
+                        <th class="card-header card-header-success">Project</th>
+                        <th class="card-header card-header-success">Release</th>
+                        <th class="card-header card-header-success">Module</th>
+                        <th class="card-header card-header-success">Object</th>
+                        <th class="card-header card-header-success">Activity</th>
+                        <th class="card-header card-header-success">JIRA Number</th>
+                        <th class="card-header card-header-success">Comments</th>
+                        <th class="card-header card-header-success">Hrs Worked</th>
+                    </tr>
                 </tbody>
-              </table> -->
+            </table>
 
 
 
@@ -136,9 +141,9 @@
 
                                 <div style="width: 12.5%; padding-left: 2%;">
                                     <div class="card card-chart">
-                                        <div class="card-header card-header-success">
+                                        <!--  <div class="card-header card-header-success">
                                             <div class="ct-chart" id="dailySalesChart">Project</div>
-                                        </div>
+                                        </div> -->
                                         <div class="card-body">
                                             <h4 class="card-title">
                                                 <mat-form-field>
@@ -157,15 +162,15 @@
                                 </div>
                                 <div style="width: 12.5%;">
                                     <div class="card card-chart">
-                                        <div class="card-header card-header-success">
+                                        <!-- <div class="card-header card-header-success">
                                             <div class="ct-chart" id="dailySalesChart">Release</div>
-                                        </div>
+                                        </div> -->
                                         <div class="card-body">
                                             <h4 class="card-title">
                                                 <mat-form-field>
-                                                    <mat-select>
-                                                        <mat-option>
-
+                                                    <mat-select placeholder="Release">
+                                                        <mat-option *ngFor="let release of releases" [value]="release.name">
+                                                            {{release.name}}
                                                         </mat-option>
                                                     </mat-select>
                                                 </mat-form-field>
@@ -177,9 +182,9 @@
                                 </div>
                                 <div style="width: 12.5%;">
                                     <div class="card card-chart">
-                                        <div class="card-header card-header-success">
+                                        <!-- <div class="card-header card-header-success">
                                             <div class="ct-chart" id="dailySalesChart">Module</div>
-                                        </div>
+                                        </div> -->
                                         <div class="card-body">
                                             <h4 class="card-title">
                                                 <mat-form-field>
@@ -198,9 +203,9 @@
                                 </div>
                                 <div style="width: 12.5%;">
                                     <div class="card card-chart">
-                                        <div class="card-header card-header-success">
+                                        <!-- <div class="card-header card-header-success">
                                             <div class="ct-chart" id="dailySalesChart">Object</div>
-                                        </div>
+                                        </div> -->
                                         <div class="card-body">
                                             <h4 class="card-title">
                                                 <mat-form-field>
@@ -225,9 +230,9 @@
                                 <!-- <div class="row"> -->
                                 <div style="width: 12.5%;">
                                     <div class="card card-chart">
-                                        <div class="card-header card-header-success">
+                                        <!-- <div class="card-header card-header-success">
                                             <div class="ct-chart" id="dailySalesChart">Activity</div>
-                                        </div>
+                                        </div> -->
                                         <div class="card-body">
                                             <h4 class="card-title">
                                                 <mat-form-field>
@@ -244,9 +249,9 @@
                                 </div>
                                 <div style="width: 12.5%;">
                                     <div class="card card-chart">
-                                        <div class="card-header card-header-success">
+                                        <!-- <div class="card-header card-header-success">
                                             <div class="ct-chart" id="dailySalesChart">JIRA Number</div>
-                                        </div>
+                                        </div> -->
                                         <div class="card-body">
                                             <h4 class="card-title">
                                                 <input placeholder="JIRA Number" style="width:90%" [(ngModel)]="JIRANumberArray[i]"
@@ -261,9 +266,9 @@
                                 </div>
                                 <div style="width: 12.5%;">
                                     <div class="card card-chart">
-                                        <div class="card-header card-header-success">
+                                        <!-- <div class="card-header card-header-success">
                                             <div class="ct-chart" id="websiteViewsChart">Comments</div>
-                                        </div>
+                                        </div> -->
                                         <div class="card-body">
                                             <h4 class="card-title">
                                                 <mat-form-field class="example-full-width">
@@ -277,13 +282,13 @@
                                 </div>
                                 <div style="width: 12.5%; padding-right: 2%">
                                     <div class="card card-chart">
-                                        <div class="card-header card-header-success">
+                                        <!-- <div class="card-header card-header-success">
                                             <div class="ct-chart" id="completedTasksChart">Hrs Worked</div>
-                                        </div>
+                                        </div> -->
                                         <div class="card-body">
                                             <h4 class="card-title">
                                                 <mat-form-field class="example-full-width">
-                                                    <input placeholder="Hrs Worked" [ngClass]="{show: HrsClass[i], hide: !HrsClass[i]}"
+                                                    <input maxlength="2"  placeholder="Hrs Worked" [ngClass]="{show: HrsClass[i], hide: !HrsClass[i]}"
                                                         matInput [(ngModel)]="HrsWorkedArray[i]" (input)="hoursClick($event,i)">
                                                 </mat-form-field>
                                             </h4>

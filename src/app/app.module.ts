@@ -19,7 +19,8 @@ import { TypographyComponent } from './typography/typography.component';
 import { IconsComponent } from './icons/icons.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { DailytimesheetComponent } from './Timesheet/dailytimesheet/dailytimesheet.component';
- 
+import { jsonContentService } from "./service/general.service"
+
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { HeaderComponent } from './header/header.component';
 
@@ -42,7 +43,7 @@ import { HeaderComponent } from './header/header.component';
     
 
   ],
-  providers: [],
+  providers: [jsonContentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

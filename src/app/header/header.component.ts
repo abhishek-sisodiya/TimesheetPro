@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { jsonContentService } from "../service/general.service"
 
 @Component({
   selector: 'app-header',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _jsonContentService: jsonContentService) { }
 
   ngOnInit() {
+    this.getContentJSON();
+  }
+
+  contentGeneral: any;
+  WelcomeUser;
+  getContentJSON() {
+    this._jsonContentService.getJsonContent().subscribe(data => {
+      this.contentGeneral = data;
+      this.WelcomeUser = this.contentGeneral.UserName;
+    }, // Bind to view
+      err => {
+        // Log errors if any
+        console.log('error: ', err);
+      });
   }
 
 }

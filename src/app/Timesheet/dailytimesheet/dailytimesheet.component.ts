@@ -32,7 +32,7 @@ export class DailytimesheetComponent implements OnInit {
     ]
     this.DefaultLocation = this.locations[1].name;
     this.getContentJSON();
-     var d = new Date(); /*
+    var d = new Date(); /*
     this.SelectedDate = d; */
     let day = d.getDate();
     let month = d.getMonth() + 1;
@@ -69,6 +69,14 @@ export class DailytimesheetComponent implements OnInit {
     { name: "--Select--" },
     { name: "Undeployed" },
   ]
+
+  releases = [
+    { name: "--Select--" },
+    { name: "1" },
+    { name: "2" },
+    { name: "3" },
+  ]
+
 
   modules = [
     { name: "--Select--" }
@@ -315,199 +323,231 @@ export class DailytimesheetComponent implements OnInit {
     alert('Location.back()');
   }
 
-
+  itemx = [];
+  count = 0;
   hoursClick(event, index) {
     if (this.HrsWorkedArray[index] != undefined || this.HrsWorkedArray[index] != '') {
       this.HrsClass[index] = true;
     }
 
-
+    this.itemx[index] = event.data;
     // console.log(index);
+    /* if(this.itemx.length > 2){
+      return false; 
+    } */
+    console.log(event);
 
-    /* this.HoursArray[index] = event.data;
-  
+    if (event.data == null) {
+      this.HoursArray = [];
+      this.HrsWorkedArray = [];
+      this.TotalHours = 0;
+    }
+
+    if (this.HoursArray.length > 1) {
+      this.HoursArray = [];
+      this.count = 0;
+    }
+    this.HoursArray[this.count++] = event.data;
+    console.log(this.HoursArray);
+
     var result = 0;
     for (var i = 0; i < this.HoursArray.length; i++) {
       result += this.HoursArray[i];
     }
-    console.log(result); */
-
-    this.TotalHours = event.data;
-  }
-
-  commentClick(index) {
-    if (this.CommentsArray[index] != undefined || this.CommentsArray[index] != '' || this.CommentsArray.length != 0) {
-      this.TextAreaClass[index] = true;
-    }
-  }
-
-  saveClick() {
-    let count = 0;
-    this.ObjectCollection = [];
-
-    console.log(this.containers);
-
-
-    for (let i: number = 0; i < this.containers.length; i++) {
-      if (this.containers[i] == true) {
-
-        if (this.HrsWorkedArray[i] == undefined || this.HrsWorkedArray[i] == '') {
-          this.HrsClass[i] = false;
-          count++;
-        }
-        else {
-          this.HrsClass[i] = true;
-        }
-
-        if (this.CommentsArray[i] == undefined || this.CommentsArray[i] == '' || this.CommentsArray.length == 0) {
-          this.TextAreaClass[i] = false;
-          count++;
-        }
-        else {
-          this.TextAreaClass[i] = true;
-        }
-
-        if (this.ProjectArray.length == 0 || this.ProjectArray[i] == '--Select--' || this.ProjectArray[i] == '' || this.ProjectArray[i] == undefined) {
-          this.ProjectClass[i] = false;
-          count++;
-        }
-        else {
-          this.ProjectClass[i] = true;
-        }
-
-        if (this.ModuleArray.length == 0 || this.ModuleArray[i] == '--Select--' || this.ModuleArray[i] == '' || this.ModuleArray[i] == undefined) {
-          this.ModuleClass[i] = false;
-          count++;
-        }
-        else {
-          this.ModuleClass[i] = true;
-        }
-
-        if (this.ObjectArray.length == 0 || this.ObjectArray[i] == '--Select--' || this.ObjectArray[i] == '' || this.ObjectArray[i] == undefined) {
-          this.ObjectClass[i] = false;
-          count++;
-        }
-        else {
-          this.ObjectClass[i] = true;
-        }
-
-        if (this.ActivityArray.length == 0 || this.ActivityArray[i] == '--Select--' || this.ActivityArray[i] == '' || this.ActivityArray[i] == undefined) {
-          this.ActivityClass[i] = false;
-          count++;
-        }
-        else {
-          this.ActivityClass[i] = true;
-        }
-      }
-    }
-
-    if (count == 0) {
-      for (let i: number = 0; i < this.containers.length; i++) {
-        if (this.containers[i] == true) {
-          this.item = {}
-          this.item["SeqNumber"] = i;
-          this.item["Project"] = this.ProjectArray[i];
-          this.item["Module"] = this.ModuleArray[i];
-          this.item["Object"] = this.ObjectArray[i];
-          this.item["Activity"] = this.ActivityArray[i];
-          if (this.JIRANumberArray[i] != undefined) {
-            this.item["JIRAno"] = this.JIRANumberArray[i];
-          }
-          this.item["Comments"] = this.CommentsArray[i];
-          this.item["HrsWorked"] = this.HrsWorkedArray[i];
-          this.ObjectCollection[i] = this.item;
-          this.openSnackBar('Timesheet Successfully Saved ', '');
-        }
-      }
-    }
-    else {
-      this.openSnackBar('Please Fill Values -->', 'For Red Areas');
-    }
-    // console.log(this.ObjectCollection);  
-    var filtered = this.ObjectCollection.filter(function (el) {
-      return el != null;
-    });
-
-    console.log(filtered);
-  }
-
-
-  openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 3000,
-    });
-  }
-
-  SelectedDate;
-  dateClick(event) {
-    // this.containers = [];
-    // this.ControlIndex = 0;
-    console.log(event.target.innerHTML);
-    
-    this.SelectedDate = event.target.innerHTML;
-  }
-
-  contentGeneral: any;
-  MonthLeft;
-  MonthMid;
-  MonthRight;
-  DayVar;
-  MonthVar;
-  YearVar;
-  datesArray = [];
-  IraName;
-  getContentJSON() {
-    this._jsonContentService.getJsonContent().subscribe(data => {
-      this.contentGeneral = data;
-      this.MonthLeft = this.contentGeneral.MonthLeft;
-      this.MonthMid = this.contentGeneral.MonthMid;
-      this.MonthRight = this.contentGeneral.MonthRight;
-      this.datesArray = this.contentGeneral.Dates;
-      this.IraName = this.contentGeneral.IraName;
-      console.log(this.contentGeneral);
-      console.log(this.datesArray);
+    console.log(result);
+    if (result > 12) {
+      this.openSnackBar1('Please enter value less than', '13');
       
 
-    }, // Bind to view
-      err => {
-        // Log errors if any
-        console.log('error: ', err);
+        this.HoursArray = [];
+        this.HrsWorkedArray = [];
+        this.count = 0;
+      }
+
+      this.TotalHours = result;
+
+    }
+
+    openSnackBar1(message: string, action: string) {
+      this.snackBar.open(message, action, {
+        duration: 3000,
+      });}
+
+
+
+    commentClick(index) {
+      if (this.CommentsArray[index] != undefined || this.CommentsArray[index] != '' || this.CommentsArray.length != 0) {
+        this.TextAreaClass[index] = true;
+      }
+    }
+
+    saveClick() {
+      let count = 0;
+      this.ObjectCollection = [];
+
+      console.log(this.containers);
+
+
+      for (let i: number = 0; i < this.containers.length; i++) {
+        if (this.containers[i] == true) {
+
+          if (this.HrsWorkedArray[i] == undefined || this.HrsWorkedArray[i] == '') {
+            this.HrsClass[i] = false;
+            count++;
+          }
+          else {
+            this.HrsClass[i] = true;
+          }
+
+          if (this.CommentsArray[i] == undefined || this.CommentsArray[i] == '' || this.CommentsArray.length == 0) {
+            this.TextAreaClass[i] = false;
+            count++;
+          }
+          else {
+            this.TextAreaClass[i] = true;
+          }
+
+          if (this.ProjectArray.length == 0 || this.ProjectArray[i] == '--Select--' || this.ProjectArray[i] == '' || this.ProjectArray[i] == undefined) {
+            this.ProjectClass[i] = false;
+            count++;
+          }
+          else {
+            this.ProjectClass[i] = true;
+          }
+
+          if (this.ModuleArray.length == 0 || this.ModuleArray[i] == '--Select--' || this.ModuleArray[i] == '' || this.ModuleArray[i] == undefined) {
+            this.ModuleClass[i] = false;
+            count++;
+          }
+          else {
+            this.ModuleClass[i] = true;
+          }
+
+          if (this.ObjectArray.length == 0 || this.ObjectArray[i] == '--Select--' || this.ObjectArray[i] == '' || this.ObjectArray[i] == undefined) {
+            this.ObjectClass[i] = false;
+            count++;
+          }
+          else {
+            this.ObjectClass[i] = true;
+          }
+
+          if (this.ActivityArray.length == 0 || this.ActivityArray[i] == '--Select--' || this.ActivityArray[i] == '' || this.ActivityArray[i] == undefined) {
+            this.ActivityClass[i] = false;
+            count++;
+          }
+          else {
+            this.ActivityClass[i] = true;
+          }
+        }
+      }
+
+      if (count == 0) {
+        for (let i: number = 0; i < this.containers.length; i++) {
+          if (this.containers[i] == true) {
+            this.item = {}
+            this.item["SeqNumber"] = i;
+            this.item["Project"] = this.ProjectArray[i];
+            this.item["Module"] = this.ModuleArray[i];
+            this.item["Object"] = this.ObjectArray[i];
+            this.item["Activity"] = this.ActivityArray[i];
+            if (this.JIRANumberArray[i] != undefined) {
+              this.item["JIRAno"] = this.JIRANumberArray[i];
+            }
+            this.item["Comments"] = this.CommentsArray[i];
+            this.item["HrsWorked"] = this.HrsWorkedArray[i];
+            this.ObjectCollection[i] = this.item;
+            this.openSnackBar('Timesheet Successfully Saved ', '');
+          }
+        }
+      }
+      else {
+        this.openSnackBar('Please Fill Values -->', 'For Red Areas');
+      }
+      // console.log(this.ObjectCollection);  
+      var filtered = this.ObjectCollection.filter(function (el) {
+        return el != null;
       });
+
+      console.log(filtered);
+    }
+
+
+    openSnackBar(message: string, action: string) {
+      this.snackBar.open(message, action, {
+        duration: 3000,
+      });
+    }
+
+    SelectedDate;
+    dateClick(event) {
+      // this.containers = [];
+      // this.ControlIndex = 0;
+      console.log(event.target.innerHTML);
+
+      this.SelectedDate = event.target.innerHTML;
+    }
+
+    contentGeneral: any;
+    MonthLeft;
+    MonthMid;
+    MonthRight;
+    DayVar;
+    MonthVar;
+    YearVar;
+    datesArray = [];
+    IraName;
+    getContentJSON() {
+      this._jsonContentService.getJsonContent().subscribe(data => {
+        this.contentGeneral = data;
+        this.MonthLeft = this.contentGeneral.MonthLeft;
+        this.MonthMid = this.contentGeneral.MonthMid;
+        this.MonthRight = this.contentGeneral.MonthRight;
+        this.datesArray = this.contentGeneral.Dates;
+        this.IraName = this.contentGeneral.IraName;
+        console.log(this.contentGeneral);
+        console.log(this.datesArray);
+
+
+      }, // Bind to view
+        err => {
+          // Log errors if any
+          console.log('error: ', err);
+        });
+    }
+
+    // clickOutside() {
+    //   if(this.x != undefined){
+    //   this.HoursArray.push(this.x);}
+    //   console.log(this.HoursArray);
+
+    //   var result = 0;
+    //   for (var i = 0; i < this.HoursArray.length; i++) {
+    //     result += this.HoursArray[i];
+    //   }
+    //   console.log(result);
+
+
+    //   // this.HoursArray.reduce(function (a, b) {
+    //   //   console.log(a + b);
+    //   // });
+
+
+    // }
+
+
+
+    /*   private _selected: any;
+      set selected(src: any) {
+        this._selected = src;
+        this.selected2 = this._selected.value[0];
+      };
+      get selected(): any { return this._selected; };
+      private selected2: string = "";
+      private data: any[] = [
+        { "name": "--Select--", "value": ["--Select--"] },
+        { "name": "Undeployed", "value": [ 'Appraisel'  ,'KT'  ,'NPA'  ,'Organisational'  ,'Self Support'  ,'Support'  ,] },
+      ]; */
+
+
+
   }
-
-  // clickOutside() {
-  //   if(this.x != undefined){
-  //   this.HoursArray.push(this.x);}
-  //   console.log(this.HoursArray);
-
-  //   var result = 0;
-  //   for (var i = 0; i < this.HoursArray.length; i++) {
-  //     result += this.HoursArray[i];
-  //   }
-  //   console.log(result);
-
-
-  //   // this.HoursArray.reduce(function (a, b) {
-  //   //   console.log(a + b);
-  //   // });
-
-
-  // }
-
-
-
-  /*   private _selected: any;
-    set selected(src: any) {
-      this._selected = src;
-      this.selected2 = this._selected.value[0];
-    };
-    get selected(): any { return this._selected; };
-    private selected2: string = "";
-    private data: any[] = [
-      { "name": "--Select--", "value": ["--Select--"] },
-      { "name": "Undeployed", "value": [ 'Appraisel'  ,'KT'  ,'NPA'  ,'Organisational'  ,'Self Support'  ,'Support'  ,] },
-    ]; */
-
-
-
-}
