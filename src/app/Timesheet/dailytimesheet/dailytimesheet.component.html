@@ -78,7 +78,7 @@
                         <mat-tab label={{MonthLeft}}> Content 1 </mat-tab>
                         <mat-tab label={{MonthMid}}>
                             <ng-container *ngFor="let vardate of datesArray; let i=index">
-                                <label for="day" (click)="dateClick($event)">{{vardate}}/{{MonthMid}}/{{year}}</label>
+                                <label for="day" (click)="dateClick($event)">{{vardate}}</label>
                                 <br>
                             </ng-container>
                         </mat-tab>
@@ -137,7 +137,7 @@
                     </button>
                     <table>
                         <tbody>
-                            <div class="row" style="border-bottom-style: solid">
+                            <div class="row" >
 
                                 <div style="width: 12.5%; padding-left: 2%;">
                                     <div class="card card-chart">
@@ -289,7 +289,7 @@
                                             <h4 class="card-title">
                                                 <mat-form-field class="example-full-width">
                                                     <input maxlength="2"  placeholder="Hrs Worked" [ngClass]="{show: HrsClass[i], hide: !HrsClass[i]}"
-                                                        matInput [(ngModel)]="HrsWorkedArray[i]" (input)="hoursClick($event,i)">
+                                                        matInput [(ngModel)]="HrsWorkedArray[i]" (input)="hoursClick($event,i)" (focusout)="hoursFocusOut($event,i)">
                                                 </mat-form-field>
                                             </h4>
                                         </div>
