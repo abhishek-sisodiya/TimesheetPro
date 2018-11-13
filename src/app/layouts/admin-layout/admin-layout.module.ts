@@ -12,6 +12,8 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { DailytimesheetComponent } from '../../Timesheet/dailytimesheet/dailytimesheet.component';
 import {MatTabsModule,MatMenuModule,MatNativeDateModule ,MatDatepickerModule,MatSnackBarModule,MatSelectModule,MatCardModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatTableModule, MatPaginatorModule, MatSortModule} from '@angular/material';
 import { jsonContentService } from "../../service/general.service"
+import { EdittimesheetComponent } from '../../Timesheet/edittimesheet/edittimesheet.component';
+import { NonworksheetComponent } from '../../Timesheet/nonworksheet/nonworksheet.component';
 
 import {
   MatButtonModule,
@@ -31,6 +33,8 @@ import {
     MatTooltipModule,
   ],
   declarations: [
+    NonworksheetComponent,
+    EdittimesheetComponent,
     DashboardComponent,
     UserProfileComponent,
     TableListComponent,
@@ -39,7 +43,7 @@ import {
     NotificationsComponent,
     DailytimesheetComponent,
   ],
-  providers: [jsonContentService],
+  // providers: [jsonContentService],
 })
 
 export class AdminLayoutModule {}

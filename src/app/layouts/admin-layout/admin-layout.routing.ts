@@ -7,6 +7,8 @@ import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { DailytimesheetComponent } from '../../Timesheet/dailytimesheet/dailytimesheet.component';
+import { EdittimesheetComponent } from '../../Timesheet/edittimesheet/edittimesheet.component';
+import { NonworksheetComponent } from '../../Timesheet/nonworksheet/nonworksheet.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -16,4 +18,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'icons',          component: IconsComponent },
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'daily-sheet',  component: DailytimesheetComponent },
+    { path: 'edit-sheet',  component: EdittimesheetComponent },
+    { path: 'nonwork-sheet',  component: NonworksheetComponent },
 ];

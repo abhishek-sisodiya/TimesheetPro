@@ -18,7 +18,8 @@ import { jsonContentService } from "../service/general.service"
     FooterComponent,
     NavbarComponent,
     SidebarComponent
-  ],  providers: [jsonContentService],
+  ],  
+  // providers: [jsonContentService],
   exports: [
     FooterComponent,
     NavbarComponent,

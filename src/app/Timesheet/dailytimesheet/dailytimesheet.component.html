@@ -255,7 +255,7 @@
                                         <div class="card-body">
                                             <h4 class="card-title">
                                                 <input placeholder="JIRA Number" style="width:90%" [(ngModel)]="JIRANumberArray[i]"
-                                                    *ngIf="IsJiraOn[i] == true">
+                                                    *ngIf="IsJiraOn[i] == true" (focusout)="jiraNum(i)">
                                                 <input placeholder="JIRA Number" style="width:90%" [(ngModel)]="JIRANumberArray[i]"
                                                     *ngIf="IsJiraOn[i] == false" disabled>
                                             </h4>
@@ -288,7 +288,7 @@
                                         <div class="card-body">
                                             <h4 class="card-title">
                                                 <mat-form-field class="example-full-width">
-                                                    <input maxlength="2"  placeholder="Hrs Worked" [ngClass]="{show: HrsClass[i], hide: !HrsClass[i]}"
+                                                    <input type="number" maxlength="2"  placeholder="Hrs Worked" [ngClass]="{show: HrsClass[i], hide: !HrsClass[i]}"
                                                         matInput [(ngModel)]="HrsWorkedArray[i]" (input)="hoursClick($event,i)" (focusout)="hoursFocusOut($event,i)">
                                                 </mat-form-field>
                                             </h4>
@@ -307,7 +307,9 @@
 
         <div style="float:right">
             <!-- hrs Worked -->
-            Total Hrs: {{TotalHours}}
+            Total Hrs: 
+            <span  style="font-size : 25px;font-weight: bold">{{TotalHours}}</span>&nbsp;
+            
             <!-- Save -->
 
             <button mat-raised-button type="submit" class="btn btn-danger " (click)="submitClick($event)">Save</button>&nbsp;

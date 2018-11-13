@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
   }
 
   menuClick(event) {
-    // this._jsonContentService.MenuItem = event.target.innerText;
+    this._jsonContentService.menuItemValue(event.target.innerText);
   }
 
 }

@@ -32,11 +32,11 @@
                     <div class="dropdown-content" (click)="menuClick($event)">
                         <label class="dropdown-item" [routerLink]="['/daily-sheet']">Daily
                             Timesheet</label>
-                        <label class="dropdown-item"  [routerLink]="['/daily-sheet']">Edit
+                        <label class="dropdown-item" [routerLink]="['/edit-sheet']">Edit
                             Timesheet</label>
                         <!-- <a class="dropdown-item" href="#">Edit TimeSheet</a> -->
                         <a class="dropdown-item" href="#">Timesheet Template</a>
-                        <a class="dropdown-item" href="#">Non-working day timeSheet</a>
+                        <label class="dropdown-item" [routerLink]="['/nonwork-sheet']">Non-working day timeSheet</label>
                         <a class="dropdown-item" href="#">Approve TimeSheet</a>
                         <a class="dropdown-item" href="#">Timesheet View</a>
                         <a class="dropdown-item" href="#">Recall Timesheet</a>

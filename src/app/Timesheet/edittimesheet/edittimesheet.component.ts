@@ -5,18 +5,18 @@ import { empty } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from "@angular/common/http";
 
 @Component({
-  selector: 'app-dailytimesheet',
-  templateUrl: './dailytimesheet.component.html',
-  styleUrls: ['./dailytimesheet.component.css'],
+  selector: 'app-edittimesheet',
+  templateUrl: './edittimesheet.component.html',
+  styleUrls: ['./edittimesheet.component.css']
 })
-export class DailytimesheetComponent implements OnInit {
+export class EdittimesheetComponent implements OnInit {
 
   constructor(private httpClient: HttpClient, public snackBar: MatSnackBar, private _jsonContentService: jsonContentService) { }
 
 
   ngOnInit() {
     //modified code
-    this.containers[this.ControlIndex] = true;
+
     this.IsJiraOn[this.ControlIndex] = true;
     this.ProjectClass[this.ControlIndex] = true;
     this.ModuleClass[this.ControlIndex] = true;
@@ -324,7 +324,6 @@ export class DailytimesheetComponent implements OnInit {
       this.ActivityArray[event] = '--Select--';
       this.CommentsArray[event] = '';
       this.HrsWorkedArray[event] = '';
-      this.TotalHours = 0;
       return false;
     }
 
@@ -398,7 +397,6 @@ export class DailytimesheetComponent implements OnInit {
   totalTimeCalc(event, index) {
     // console.log(index);
     // console.log(this.FocusOutValue);
-
     this.TotalHours = 0;
     this.FocusOutValue[index] = event;
     if (this.HrsWorkedArray[index] == 0) {
@@ -406,13 +404,7 @@ export class DailytimesheetComponent implements OnInit {
       this.HrsWorkedArray[index] = '';
     }
     for (let i = 0; i < this.FocusOutValue.length; i++) {
-     
-       if (this.JIRANumberArray[i] != undefined) {
-        console.log(this.myarray);
-        console.log(this.FocusOutValue);
-        
-        this.TotalHours += +((this.myarray[i].length) * this.FocusOutValue[i]);
-      } else if (this.FocusOutValue[i] != NaN) {
+      if (this.FocusOutValue[i] != NaN) {
         this.TotalHours += +this.FocusOutValue[i];
       }
     }
@@ -445,39 +437,23 @@ export class DailytimesheetComponent implements OnInit {
     return Promise.reject(error.message || error);
   }
 
-  jiraNum(index) {
-      if (this.JIRANumberArray[index] != undefined) {
-        this.myarray[index] = this.JIRANumberArray[index].split(',');
-      }
-      if(this.HrsWorkedArray[index] != undefined){
-        this.totalTimeCalc(this.HrsWorkedArray[index],index);
-      }
-  }
 
   httpOptions: any;
-  myarray = [];
   submitClick(event) {
-
+    
     let count = 0;
     this.ObjectCollection = [];
+
     // console.log(this.containers);
 
     for (let i: number = 0; i < this.containers.length; i++) {
       if (this.containers[i] == true) {
 
         if (this.JIRANumberArray[i] != undefined) {
-          this.myarray[i] = this.JIRANumberArray[i].split(',');
-
-          if (this.myarray[i].length > 1 && this.HrsWorkedArray[i] > 4) {
+          var myarray = this.JIRANumberArray[i].split(',');
+          if (myarray.length > 1 && this.HrsWorkedArray[i] > 4) {
             count++;
             alert("more than 4 hours is not allowed for more than one jira. Please split it in multiple task");
-          }
-          else if (this.HrsWorkedArray[i] != undefined) {
-            if ((this.myarray[i].length) * this.HrsWorkedArray[i] > 12) {
-              count++;
-              alert("total hrs with jira is " + (this.myarray[i].length) * this.HrsWorkedArray[i] + " which is greater than 12");
-              break;
-            }
           }
         }
 
@@ -607,7 +583,7 @@ export class DailytimesheetComponent implements OnInit {
     }
     var random = this.item;
     console.log(random);
-
+    
     this.httpOptions = new HttpHeaders({
       /* 'Access-Control-Allow-Headers': 'Content-Type',
       'Access-Control-Allow-Methods': 'GET, POST',
@@ -670,7 +646,7 @@ export class DailytimesheetComponent implements OnInit {
       this.MonthMid = this.contentGeneral.MonthMid;
       this.MonthRight = this.contentGeneral.MonthRight;
       for (let i = 0; i < this.contentGeneral.Dates.length; i++) {
-        this.datesArray[i] = this.contentGeneral.Dates[i] + "/" + this.MonthMid + "/" + this.year;
+        // this.datesArray[i] = this.contentGeneral.Dates[i] + "/" + this.MonthMid + "/" + this.year;
       }
       this.IraName = this.contentGeneral.IraName;
       this.SelectedDate = this.contentGeneral.Dates[0];
