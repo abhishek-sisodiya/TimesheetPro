@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { jsonContentService } from "../../service/general.service"
 import { empty } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from "@angular/common/http";
+
 @Component({
   selector: 'app-dailytimesheet',
   templateUrl: './dailytimesheet.component.html',
@@ -9,12 +11,11 @@ import { empty } from 'rxjs';
 })
 export class DailytimesheetComponent implements OnInit {
 
-  constructor(public snackBar: MatSnackBar, private _jsonContentService: jsonContentService) { }
+  constructor(private httpClient: HttpClient, public snackBar: MatSnackBar, private _jsonContentService: jsonContentService) { }
 
 
   ngOnInit() {
     //modified code
-
     this.containers[this.ControlIndex] = true;
     this.IsJiraOn[this.ControlIndex] = true;
     this.ProjectClass[this.ControlIndex] = true;
@@ -129,7 +130,7 @@ export class DailytimesheetComponent implements OnInit {
     }
 
     if (event.value == 'Undeployed') {
-      this.IsJiraOn[index] = false;
+      // this.IsJiraOn[index] = false;
       this.modules = [
         { name: '--Select--' },
         { name: 'Appraisal' },
@@ -430,15 +431,31 @@ export class DailytimesheetComponent implements OnInit {
     }
   }
 
-  saveClick() {
+
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error); // for demo purposes only
+    return Promise.reject(error.message || error);
+  }
+
+
+  httpOptions: any;
+  submitClick(event) {
+    
     let count = 0;
     this.ObjectCollection = [];
 
     // console.log(this.containers);
 
-
     for (let i: number = 0; i < this.containers.length; i++) {
       if (this.containers[i] == true) {
+
+        if (this.JIRANumberArray[i] != undefined) {
+          var myarray = this.JIRANumberArray[i].split(',');
+          if (myarray.length > 1 && this.HrsWorkedArray[i] > 4) {
+            count++;
+            alert("more than 4 hours is not allowed for more than one jira. Please split it in multiple task");
+          }
+        }
 
         if (this.HrsWorkedArray[i] == undefined || this.HrsWorkedArray[i] == '') {
           this.HrsClass[i] = false;
@@ -494,33 +511,99 @@ export class DailytimesheetComponent implements OnInit {
       for (let i: number = 0; i < this.containers.length; i++) {
         if (this.containers[i] == true) {
           this.item = {}
-          this.item["SeqNumber"] = i;
-          this.item["Project"] = this.ProjectArray[i];
-          this.item["Module"] = this.ModuleArray[i];
-          this.item["Object"] = this.ObjectArray[i];
-          this.item["Activity"] = this.ActivityArray[i];
+          // this.item["SeqNumber"] = i;
+          this.item["TimesheetDetailID"] = 201 + i;
+          this.item["TimesheetID"] = 9;
+          this.item["ProjectCode"] = this.ProjectArray[i];
+          this.item["ModuleID"] = this.ModuleArray[i];
+          this.item["ObjectID"] = this.ObjectArray[i];
+          this.item["ActivityID"] = this.ActivityArray[i];
           if (this.JIRANumberArray[i] != undefined) {
-            this.item["JIRAno"] = this.JIRANumberArray[i];
+            this.item["JIRANumber"] = this.JIRANumberArray[i];
           }
-          this.item["Comments"] = this.CommentsArray[i];
-          this.item["HrsWorked"] = this.HrsWorkedArray[i];
+          this.item["Comment"] = this.CommentsArray[i];
+          this.item["HoursSpent"] = this.HrsWorkedArray[i];
+          this.item["TimesheetDate"] = this.SelectedDate;
+          this.item["EntryDate"] = this.SelectedDate;
           this.ObjectCollection[i] = this.item;
-          this.ObjectCollection[i + 1] = this.SelectedDate;
-          this.datesArray[i] = '';
+          // this.ObjectCollection[i + 1] = this.SelectedDate;
+
+          this.datesArray[i] = undefined;
+          this.datesArray = this.datesArray.filter(function (el) {
+            return el != null;
+          });
+          // console.log(this.datesArray);
+
           this.openSnackBar('Timesheet Successfully Saved ', '');
-          this.getContentJSON();
+          // this.getContentJSON();
         }
       }
-    }
-    else {
+
+
+      // console.log(this.ObjectCollection);  
+      var filtered = this.ObjectCollection.filter(function (el) {
+        return el != null;
+      });
+
+      console.log(filtered);
+
+      this.httpOptions = new HttpHeaders({
+        /* 'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET, POST',
+        'Access-Control-Allow-Origin': '*', */
+        'Content-Type': 'application/json; charset=utf-8',
+        // "Access-Control-Allow-Origin": "*",
+        // "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Content-Type, Accept, Pragma, Cache-Control, Authorization,Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers" ,
+        // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      });
+
+      for (let i = 0; i < this.ObjectCollection.length; i++) {
+        let data = JSON.stringify(this.ObjectCollection[i]);
+        // console.log(data[i]);
+
+        this.httpClient.post('http://localhost:50505/api/TimesheetDetails', data, {
+          headers: this.httpOptions
+        }).subscribe(
+          result => { console.log(result); },
+          error => { this.handleError(error); },
+          () => { });
+
+      }
+    } else {
       this.openSnackBar('Please Fill Values -->', 'For Red Areas');
     }
-    // console.log(this.ObjectCollection);  
-    var filtered = this.ObjectCollection.filter(function (el) {
-      return el != null;
+
+    this.item = {};
+    this.item["TimesheetID"] = 113;
+    this.item["EmployeeCode"] = '123/456';
+    if (event.target.innerText == 'SUBMIT') {
+      this.item["IsSubmitted"] = 1;
+    } else {
+      this.item["IsSaved"] = 1;
+    }
+    var random = this.item;
+    console.log(random);
+    
+    this.httpOptions = new HttpHeaders({
+      /* 'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Methods': 'GET, POST',
+      'Access-Control-Allow-Origin': '*', */
+      'Content-Type': 'application/json; charset=utf-8',
+      // "Access-Control-Allow-Origin": "*",
+      // "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Content-Type, Accept, Pragma, Cache-Control, Authorization,Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers" ,
+      // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
     });
 
-    console.log(filtered);
+    let data = JSON.stringify(random);
+    // console.log(data[i]);
+
+    this.httpClient.post('http://localhost:50505/api/JustHeader', data, {
+      headers: this.httpOptions
+    }).subscribe(
+      result => { console.log(result); },
+      error => { this.handleError(error); },
+      () => { });
+
   }
 
 
@@ -563,7 +646,7 @@ export class DailytimesheetComponent implements OnInit {
       this.MonthMid = this.contentGeneral.MonthMid;
       this.MonthRight = this.contentGeneral.MonthRight;
       for (let i = 0; i < this.contentGeneral.Dates.length; i++) {
-        this.datesArray[i] = this.contentGeneral.Dates[i] + "/" + this.MonthMid + "/" + this.year;;
+        this.datesArray[i] = this.contentGeneral.Dates[i] + "/" + this.MonthMid + "/" + this.year;
       }
       this.IraName = this.contentGeneral.IraName;
       this.SelectedDate = this.contentGeneral.Dates[0];

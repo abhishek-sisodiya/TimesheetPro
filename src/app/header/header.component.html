@@ -29,10 +29,12 @@
                         <span class="notification">TimeSheet</span>
 
                     </button>
-                    <div class="dropdown-content">
-                        <label class="dropdown-item" (click)="dailySheetClick()" [routerLink]="['/daily-sheet']">Daily
+                    <div class="dropdown-content" (click)="menuClick($event)">
+                        <label class="dropdown-item" [routerLink]="['/daily-sheet']">Daily
                             Timesheet</label>
-                        <a class="dropdown-item" href="#">Edit TimeSheet</a>
+                        <label class="dropdown-item"  [routerLink]="['/daily-sheet']">Edit
+                            Timesheet</label>
+                        <!-- <a class="dropdown-item" href="#">Edit TimeSheet</a> -->
                         <a class="dropdown-item" href="#">Timesheet Template</a>
                         <a class="dropdown-item" href="#">Non-working day timeSheet</a>
                         <a class="dropdown-item" href="#">Approve TimeSheet</a>

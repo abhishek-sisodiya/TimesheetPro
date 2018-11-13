@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import 'rxjs/Rx';
 
 // @Injectable({
@@ -7,6 +7,7 @@ import 'rxjs/Rx';
 // })
 @Injectable()
 export class jsonContentService {
+  // MenuItem:string;
 
   constructor(private httpClient: HttpClient) { }
   getJsonContent() {
