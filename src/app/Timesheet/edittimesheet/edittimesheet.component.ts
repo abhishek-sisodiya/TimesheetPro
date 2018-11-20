@@ -17,13 +17,46 @@ export class EdittimesheetComponent implements OnInit {
   ngOnInit() {
     //modified code
 
-    this.IsJiraOn[this.ControlIndex] = true;
-    this.ProjectClass[this.ControlIndex] = true;
-    this.ModuleClass[this.ControlIndex] = true;
-    this.ObjectClass[this.ControlIndex] = true;
-    this.ActivityClass[this.ControlIndex] = true;
-    this.HrsClass[this.ControlIndex] = true;
-    this.TextAreaClass[this.ControlIndex] = true;
+    this.httpClient.get('http://localhost:50505/api/JustHeader').subscribe(
+      result => {
+        this.dbValues.push(result);
+        for (let i = 0; i < this.dbValues[0].length; i++) {
+          if (this.dbValues[0][i].IsSaved == 1) {
+            console.log(this.dbValues);
+            console.log(this.dbValues[0][i]);
+            this.containers[this.ControlIndex] = true;
+            // this.ProjectArray[this.ControlIndex] = this.dbValues[0][i].TimesheetDetails[0].ProjectCode;
+            this.projectClick(this.dbValues[0][i].TimesheetDetails[0].ProjectCode, this.ControlIndex);
+            this.moduleClick(this.dbValues[0][i].TimesheetDetails[0].ModuleID, this.ControlIndex);
+            this.objectClick(this.dbValues[0][i].TimesheetDetails[0].ObjectID, this.ControlIndex);
+            this.activityClick(this.dbValues[0][i].TimesheetDetails[0].ActivityID, this.ControlIndex);
+            this.JIRANumberArray[this.ControlIndex] = this.dbValues[0][i].TimesheetDetails[0].JIRANumber;
+            this.CommentsArray[this.ControlIndex] = this.dbValues[0][i].TimesheetDetails[0].Comment;
+            this.HrsWorkedArray[this.ControlIndex] = this.dbValues[0][i].TimesheetDetails[0].HoursSpent;
+
+            this.IsJiraOn[this.ControlIndex] = true;
+            this.ProjectClass[this.ControlIndex] = true;
+            this.ModuleClass[this.ControlIndex] = true;
+            this.ObjectClass[this.ControlIndex] = true;
+            this.ActivityClass[this.ControlIndex] = true;
+            this.HrsClass[this.ControlIndex] = true;
+            this.TextAreaClass[this.ControlIndex] = true;
+
+            this.ControlIndex++;
+          }
+        }
+      },
+      error => { this.handleError(error); },
+      () => { });
+
+
+    /*     this.IsJiraOn[this.ControlIndex] = true;
+        this.ProjectClass[this.ControlIndex] = true;
+        this.ModuleClass[this.ControlIndex] = true;
+        this.ObjectClass[this.ControlIndex] = true;
+        this.ActivityClass[this.ControlIndex] = true;
+        this.HrsClass[this.ControlIndex] = true;
+        this.TextAreaClass[this.ControlIndex] = true; */
 
     this.locations = [
       { name: "Bangalore" },
@@ -41,6 +74,8 @@ export class EdittimesheetComponent implements OnInit {
     this.year = d.getFullYear();
     // this.SelectedDate = [day, month, this.year].join('/');
   }
+  StatusCode: number;
+  dbValues = [];
   year;
   DefaultLocation;
   IsJiraOn = [];
@@ -124,12 +159,12 @@ export class EdittimesheetComponent implements OnInit {
 
 
   projectClick(event, index) {
-    this.ProjectArray[index] = event.value;
-    if (event.value != '--Select--') {
+    this.ProjectArray[index] = event;
+    if (event != '--Select--') {
       this.ProjectClass[index] = true;
     }
 
-    if (event.value == 'Undeployed') {
+    if (event == 'Undeployed') {
       // this.IsJiraOn[index] = false;
       this.modules = [
         { name: '--Select--' },
@@ -141,7 +176,7 @@ export class EdittimesheetComponent implements OnInit {
         { name: 'Support' },
       ]
     }
-    if (event.value == '--Select--') {
+    if (event == '--Select--') {
       this.IsJiraOn[index] = true;
       this.modules = [
         { name: "--Select--" }
@@ -153,29 +188,29 @@ export class EdittimesheetComponent implements OnInit {
   }
 
   moduleClick(event, index) {
-    this.ModuleArray[index] = event.value;
-    if (event.value != '--Select--') {
+    this.ModuleArray[index] = event;
+    if (event != '--Select--') {
       this.ModuleClass[index] = true;
     }
 
-    if (event.value == '--Select--') {
+    if (event == '--Select--') {
       this.objects = [
         { name: "--Select--" }
       ]
     }
-    else if (event.value == 'Appraisal' || event.value == 'KT') {
+    if (event == 'Appraisal' || event == 'KT') {
       this.objects = [
         { name: "--Select--" },
         { name: "Meeting" }
       ]
     }
-    else if (event.value == 'NPA') {
+    if (event == 'NPA') {
       this.objects = [
         { name: "--Select--" },
         { name: "Documentation" }
       ]
     }
-    else if (event.value == 'Organisational') {
+    if (event == 'Organisational') {
       this.objects = [
         { name: "--Select--" },
         { name: "Holiday" },
@@ -188,14 +223,14 @@ export class EdittimesheetComponent implements OnInit {
         { name: "Training (As Trainer)" }
       ]
     }
-    else if (event.value == 'Self Assigned') {
+    if (event == 'Self Assigned') {
       this.objects = [
         { name: "--Select--" },
         { name: "Doing R&D" },
         { name: "Leave" }
       ]
     }
-    else if (event.value == 'Support') {
+    if (event == 'Support') {
       this.objects = [
         { name: "--Select--" },
         { name: "Support Activity" },
@@ -204,15 +239,15 @@ export class EdittimesheetComponent implements OnInit {
   }
 
   objectClick(event, index) {
-    this.ObjectArray[index] = event.value;
-    if (event.value != '--Select--') {
+    this.ObjectArray[index] = event;
+    if (event != '--Select--') {
       this.ObjectClass[index] = true;
     }
   }
 
   activityClick(event, index) {
-    this.ActivityArray[index] = event.value;
-    if (event.value != '--Select--') {
+    this.ActivityArray[index] = event;
+    if (event != '--Select--') {
       this.ActivityClass[index] = true;
     }
   }
@@ -440,7 +475,7 @@ export class EdittimesheetComponent implements OnInit {
 
   httpOptions: any;
   submitClick(event) {
-    
+
     let count = 0;
     this.ObjectCollection = [];
 
@@ -583,7 +618,7 @@ export class EdittimesheetComponent implements OnInit {
     }
     var random = this.item;
     console.log(random);
-    
+
     this.httpOptions = new HttpHeaders({
       /* 'Access-Control-Allow-Headers': 'Content-Type',
       'Access-Control-Allow-Methods': 'GET, POST',

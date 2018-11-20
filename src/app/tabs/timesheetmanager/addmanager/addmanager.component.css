@@ -1,0 +1,10 @@
+.button {
+    text-align: center;
+    padding-top: 20px;
+    clear: both;
+} 
+
+table {
+    border-collapse: separate;
+    border-spacing: 5em 0;
+}

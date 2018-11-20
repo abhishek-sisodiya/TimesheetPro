@@ -16,6 +16,7 @@ export class DailytimesheetComponent implements OnInit {
 
   ngOnInit() {
     //modified code
+    this.TotalHours = 0;
     this.containers[this.ControlIndex] = true;
     this.IsJiraOn[this.ControlIndex] = true;
     this.ProjectClass[this.ControlIndex] = true;
@@ -406,11 +407,11 @@ export class DailytimesheetComponent implements OnInit {
       this.HrsWorkedArray[index] = '';
     }
     for (let i = 0; i < this.FocusOutValue.length; i++) {
-     
-       if (this.JIRANumberArray[i] != undefined) {
+
+      if (this.JIRANumberArray[i] != undefined) {
         console.log(this.myarray);
         console.log(this.FocusOutValue);
-        
+
         this.TotalHours += +((this.myarray[i].length) * this.FocusOutValue[i]);
       } else if (this.FocusOutValue[i] != NaN) {
         this.TotalHours += +this.FocusOutValue[i];
@@ -446,12 +447,12 @@ export class DailytimesheetComponent implements OnInit {
   }
 
   jiraNum(index) {
-      if (this.JIRANumberArray[index] != undefined) {
-        this.myarray[index] = this.JIRANumberArray[index].split(',');
-      }
-      if(this.HrsWorkedArray[index] != undefined){
-        this.totalTimeCalc(this.HrsWorkedArray[index],index);
-      }
+    if (this.JIRANumberArray[index] != undefined) {
+      this.myarray[index] = this.JIRANumberArray[index].split(',');
+    }
+    if (this.HrsWorkedArray[index] != undefined) {
+      this.totalTimeCalc(this.HrsWorkedArray[index], index);
+    }
   }
 
   httpOptions: any;
@@ -536,8 +537,8 @@ export class DailytimesheetComponent implements OnInit {
         if (this.containers[i] == true) {
           this.item = {}
           // this.item["SeqNumber"] = i;
-          this.item["TimesheetDetailID"] = 201 + i;
-          this.item["TimesheetID"] = 9;
+          this.item["TimesheetDetailID"] = 421;
+          this.item["TimesheetID"] = 421;
           this.item["ProjectCode"] = this.ProjectArray[i];
           this.item["ModuleID"] = this.ModuleArray[i];
           this.item["ObjectID"] = this.ObjectArray[i];
@@ -593,41 +594,42 @@ export class DailytimesheetComponent implements OnInit {
           () => { });
 
       }
+
+
+      this.item = {};
+      this.item["TimesheetID"] = 421;
+      this.item["EmployeeCode"] = '123/456';
+      if (event.target.innerText == 'SUBMIT') {
+        this.item["IsSubmitted"] = 1;
+      } else {
+        this.item["IsSaved"] = 1;
+      }
+      var random = this.item;
+      console.log(random);
+
+      this.httpOptions = new HttpHeaders({
+        /* 'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET, POST',
+        'Access-Control-Allow-Origin': '*', */
+        'Content-Type': 'application/json; charset=utf-8',
+        // "Access-Control-Allow-Origin": "*",
+        // "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Content-Type, Accept, Pragma, Cache-Control, Authorization,Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers" ,
+        // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      });
+
+      let data = JSON.stringify(random);
+      // console.log(data[i]);
+
+      this.httpClient.post('http://localhost:50505/api/JustHeader', data, {
+        headers: this.httpOptions
+      }).subscribe(
+        result => { console.log(result); },
+        error => { this.handleError(error); },
+        () => { });
+
     } else {
       this.openSnackBar('Please Fill Values -->', 'For Red Areas');
     }
-
-    this.item = {};
-    this.item["TimesheetID"] = 113;
-    this.item["EmployeeCode"] = '123/456';
-    if (event.target.innerText == 'SUBMIT') {
-      this.item["IsSubmitted"] = 1;
-    } else {
-      this.item["IsSaved"] = 1;
-    }
-    var random = this.item;
-    console.log(random);
-
-    this.httpOptions = new HttpHeaders({
-      /* 'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Allow-Methods': 'GET, POST',
-      'Access-Control-Allow-Origin': '*', */
-      'Content-Type': 'application/json; charset=utf-8',
-      // "Access-Control-Allow-Origin": "*",
-      // "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Content-Type, Accept, Pragma, Cache-Control, Authorization,Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers" ,
-      // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
-    });
-
-    let data = JSON.stringify(random);
-    // console.log(data[i]);
-
-    this.httpClient.post('http://localhost:50505/api/JustHeader', data, {
-      headers: this.httpOptions
-    }).subscribe(
-      result => { console.log(result); },
-      error => { this.handleError(error); },
-      () => { });
-
   }
 
 

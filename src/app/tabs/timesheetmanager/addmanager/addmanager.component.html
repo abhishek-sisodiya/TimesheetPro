@@ -1,0 +1,140 @@
+<mat-tab-group>
+  <mat-tab label="Project Information">
+
+
+    <div class="container">
+      <form [formGroup]="userForm" (ngSubmit)="onFormSubmit(userForm.value)">
+        <table>
+          <tr>
+            <td>
+              <mat-form-field>
+                <mat-select required formControlName="ClientName" placeholder="Client Name">
+                  <mat-option *ngFor="let cname of ClientName" [value]="cname">{{cname}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <mat-select required formControlName="TechnoType" placeholder="Technology">
+                  <mat-option *ngFor="let techtype of TechnoType" [value]="techtype">{{techtype}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field>
+                <input required formControlName="ProjectCode" matInput placeholder="Project Code">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-checkbox>Is Parent</mat-checkbox>
+              <mat-checkbox style="margin-left: 2%;">Is Active</mat-checkbox>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field>
+                <input required formControlName="ProjectName" matInput placeholder="Project Name">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <mat-select required formControlName="ParentProjectName" placeholder="Parent Project Name">
+                  <mat-option *ngFor="let ppname of ParentProjectName" [value]="ppname">{{ppname}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <mat-form-field>
+                <input required matInput [matDatepicker]="picker1" placeholder="TimeSheet Start Date" formControlName="TsStartDate">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <input required formControlName="ProjectOwner" matInput placeholder="Project Owner">
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <mat-form-field>
+                <input required matInput [matDatepicker]="picker2" placeholder="Start date" formControlName="StartDate">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <input required formControlName="AccountManager" matInput placeholder="Account Manager">
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <mat-form-field>
+                <input required matInput [matDatepicker]="picker3" placeholder="End date" formControlName="EndDate">
+                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                <mat-datepicker #picker3></mat-datepicker>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <mat-select required formControlName="ContractType" placeholder="Contract Type">
+                  <mat-option *ngFor="let contracttype of ContractType" [value]="contracttype">{{contracttype}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <mat-form-field>
+                <input required formControlName="EstimationPd" matInput placeholder="Estimation (PDs)">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <mat-select required formControlName="DivisionType" placeholder="Division/DM">
+                  <mat-option *ngFor="let divisiontype of DivisionType" [value]="divisiontype">{{divisiontype}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <mat-form-field>
+                <mat-select required formControlName="ProjectType" placeholder="Project Type">
+                  <mat-option *ngFor="let ptype of ProjectType" [value]="ptype">{{ptype}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <mat-select required formControlName="DivisionType" placeholder="Division/DM">
+                  <mat-option *ngFor="let divisiontype of DivisionType" [value]="divisiontype">{{divisiontype}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </tr>
+
+        </table>
+
+        <div class="button">
+          <button [disabled]="userForm.invalid" class="btn btn-success" name="Save">Save</button>
+          <button class="btn btn-danger" (mousedown)="cancelClick()" name="Cancel">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+  </mat-tab>
+  <mat-tab *ngIf="ShowMInfo" label="Module Information"> </mat-tab>
+</mat-tab-group>

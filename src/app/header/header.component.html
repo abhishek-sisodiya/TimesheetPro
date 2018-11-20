@@ -3,7 +3,7 @@
         <img style="padding-bottom: 30px; padding-top: 30px; width: 50%;" src="assets/img/logo.png">
     </div>
     <div style=" width: 50%; display: inline-block;">
-        <div style="padding-left: 50%;">
+        <div style="padding-left: 40%;">
             <ul id="nav" class="nav nav-pills clearfix right" role="tablist" style="padding-top: 2%;">
                 <li>Welcome <p style="font-weight: bold"> {{WelcomeUser}} </p>
                 </li>&nbsp;
@@ -42,6 +42,19 @@
                         <a class="dropdown-item" href="#">Recall Timesheet</a>
                         <a class="dropdown-item" href="#">Timesheet Deatil</a>
                         <a class="dropdown-item" href="#">Employee Skill</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button mat-raised-button type="submit" class="btn btn-danger , dropbtn " id="navbarDropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="material-icons">content_paste</i>
+                        <span class="notification">TimeSheet Manager</span>
+
+                    </button>
+                    <div class="dropdown-content" (click)="menuClick($event)">
+                        <label class="dropdown-item" [routerLink]="['/manager-sheet']">Add Timesheet</label>
+
                     </div>
                 </div>
 

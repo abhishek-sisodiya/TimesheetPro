@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-import {MatTabsModule,MatMenuModule,MatNativeDateModule ,MatDatepickerModule,MatSnackBarModule,MatSelectModule,MatCardModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatTableModule, MatPaginatorModule, MatSortModule} from '@angular/material';
+import { MatTabsModule, MatMenuModule, MatNativeDateModule, MatDatepickerModule, MatSnackBarModule, MatSelectModule, MatCardModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
@@ -23,11 +23,15 @@ import { jsonContentService } from "./service/general.service"
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { HeaderComponent } from './header/header.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   imports: [
+    AgGridModule.withComponents(null),
+    ReactiveFormsModule,
     HttpClientModule,
-    MatTabsModule,MatMenuModule,MatNativeDateModule ,MatDatepickerModule,MatSnackBarModule,MatSelectModule,MatCardModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatTableModule, MatPaginatorModule, MatSortModule,
+    MatTabsModule, MatMenuModule, MatNativeDateModule, MatDatepickerModule, MatSnackBarModule, MatSelectModule, MatCardModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatTableModule, MatPaginatorModule, MatSortModule,
     LayoutModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -40,9 +44,6 @@ import { HeaderComponent } from './header/header.component';
     AppComponent,
     AdminLayoutComponent,
     HeaderComponent,
-    
-    
-
   ],
   providers: [jsonContentService],
   bootstrap: [AppComponent]
